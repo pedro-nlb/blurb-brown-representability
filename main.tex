@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,reqno]{amsart}
+\documentclass[12pt,a4paper]{amsart}
 
 % Usual preamble
 
@@ -53,7 +53,7 @@
 
 % Specific preamble
 
-\title[Short notes on...]{Short notes on...}
+\title[Brown Representability]{Brown Representability}
 \author[Pedro N\'{u}\~{n}ez]{Pedro N\'{u}\~{n}ez}\thanks{{\itshape Email:}~\href{mailto:pedro.nunez@math.uni-freiburg.de}{pedro.nunez@math.uni-freiburg.de}. \\ \indent {\itshape Homepage:}~\href{https://home.mathematik.uni-freiburg.de/nunez/?l=en}{https://home.mathematik.uni-freiburg.de/nunez}}
 \date{\today}
 
@@ -74,6 +74,63 @@
 \maketitle
 
 \tableofcontents
+
+\section{Why cohomology?}
+
+We would like be able to distinguish between different topological spaces.
+For example, it is useful to know that we live in a sphere rather than in a (hollow) donut.
+In order to ensure that two topological spaces are different---not isomorphic as topological spaces---we would need to show that there does not exist a homeomorphism between them.
+But this is a very difficult problem in general.
+For example, how do we show that there is no homeomorphism between the $2$-sphere and the donut?
+There are plenty of bijections between the two spaces, so checking directly that each of these bijections is not continuous is not a viable option.
+
+Instead, we look for \emph{invariants} of topological spaces, i.e., quantities or objects that are the same among isomorphic topological spaces.
+If two topological spaces have different invariants, then they cannot be homeomorphic.
+For example, the number of points that we need to remove from a topological space before it becomes contractible is an invariant which allows us to distinguish the $2$-sphere from the donut.
+It is easy to see that this invariant differs for these two spaces, but it can be difficult to compute this invariant for arbitrary topological spaces.
+Instead, it is more convenient to look at invariants which are perhaps a bit harder to compute in such easy examples, but which can be computed in a more systematic way for arbitrary topological spaces.
+Cohomology is one such invariant.
+
+\section{Cell complexes and cellular cohomology}
+
+\begin{defn}[Cell complex]
+  For $n \in \mathbb{N}$, an \emph{$n$-cell} is a topological space homeomorhpic to the closed unit ball $D^{n} \subseteq \mathbb{R}^{n}$.
+  A \emph{cell complex} is a topological space $X$ constructed inductively as follows:
+  \begin{enumerate}
+    \item The $0$-skeleton $X^{0}$ is a disjoint union of $0$-cells.
+    \item The $m$-skeleton $X^{m}$ is obtained from $X^{m-1}$ by attaching a collection of $m$-cells to it along their boundaries.
+      That is, there exists a set $A$ and a collection of maps $\{\varphi_{\alpha} \colon S^{m-1} \to X^{m-1}\}_{\alpha \in A}$ such that $X^{m}$ fits into the following pushout diagram:
+      \begin{center}
+        \begin{tikzcd}
+          \sqcup_{\alpha \in A} S^{m-1}_{\alpha} \arrow[hook]{r} \arrow{d}{\sqcup_{\alpha \in A}} & \sqcup_{\alpha \in A} D^{m}_{\alpha} \arrow{d} \\
+          X^{m-1} \arrow{r} & X^{m} 
+        \end{tikzcd}
+      \end{center}
+    \item We set $X = \cup_{m \in \mathbb{N}} X^{m}$ and endow it with the weak topology, i.e., $U \subseteq X$ is open if and only if $U \cap X^{m}$ is open in $X^{m}$ for all $m \in \mathbb{N}$.
+  \end{enumerate}
+\end{defn}
+
+Many familiar topological spaces can be described as cell complexes:
+
+\begin{exmp}
+  The $2$-sphere can be described as cell complex in many ways, for example:
+  \begin{itemize}
+    \item One single $0$-cell and one single $2$-cell.
+    \item One single $0$-cell, one single $1$-cell and two $2$-cells.
+  \end{itemize}
+\end{exmp}
+
+We can use a cell complex description of a topological space to compute its (cellular) cohomology:
+
+\begin{defn}[Cellular cohomology]
+  ...
+\end{defn}
+
+\section{Cohomology theories}
+
+\section{Spectra}
+
+\section{Brown Representability theorem}
 
 \printbibliography
 \vfill
