@@ -96,9 +96,7 @@ Cohomology is one such invariant.
   There is an analogous statement for homology, but it is more complicated to obtain \cite[\S 4.F]{hat02}.
 \end{rem}
 
-\section{Cell complexes and cellular cohomology}
-
-\subsection{(Singular) cohomology}
+\section{(Singular) cohomology}
 
 A \emph{(singular) $n$-simplex} on a topological space $X$ is a continuous image of the standard $n$-simplex $\Delta^{n} \subseteq \mathbb{R}^{n+1}$.
 We want to keep track of the order of the vertices and we may replace the standard $n$-simplex by any other $n$-dimensional simplex of the form
@@ -136,7 +134,6 @@ We can extend this functor to the category of pairs $(X,A)$ consisting of a topo
 We have a natural inclusion $C_{n}(A) \subseteq C_{n}(X)$ and $d_{n-1}(C_{n}(A)) \subseteq C_{n-1}(A)$, so setting $C_{n}(X,A) := C_{n}(X)/C_{n}(A)$ we obtain a new chain complex $C_{\bullet}(X,A)$ with boundary maps induced by the ones on $C_{\bullet}(X)$.
 We again define $C^{\bullet}(X,A)$ as the dual cochain complex $\operatorname{Hom}(C_{\bullet}(X,A),\mathbb{Z})$ and set
 \[ H^{n}(X,A) := H^{n}(C^{\bullet}(X,A)). \]
-We will discuss the properties of this functor in \Cref{sec:cohomologies}.
 
 \begin{rem}
   Sice $C_{n}(A) \subseteq C_{n}(X)$ is the free abelian subgroup spanned by a subset of the generators of $C_{n}(X)$, the quotient $C_{n}(X,A)$ is again a free abelian group.
@@ -146,11 +143,25 @@ We will discuss the properties of this functor in \Cref{sec:cohomologies}.
   Therefore we can think of $C^{n}(X,A)$ as the subset of functions in $C^{n}(X)$ which vanish on all $n$-simplices with image contained in $A$.
 \end{rem}
 
-\subsection{Cell complexes}
+\begin{defn}[Reduced cohomology]
+  Let now $(X,x_{0})$ be a pointed space.
+  For each $n \in \mathbb{N}$ we define the \emph{reduced cohomology} of $X$ as
+  \[ \tilde{H}^{n}(X) = H^{n}(X,\{x_{0}\}) = \ker(H^{n}(X) \to H^{n}(\{x_{0}\})). \]
+\end{defn}
 
-\begin{defn}[Cell complex]
+\begin{rem}
+  We can recover the unreduced cohomology of pairs from the reduced one.
+  See \emph{Relation between reduced and unreduced cohomology} on \href{https://ncatlab.org/nlab/show/generalized+\%28Eilenberg-Steenrod\%29+cohomology\#RelationBetweenReducedAndUnreduced}{nLab's page for generalized (Eilenberg--Steenrod) cohomology}.
+\end{rem}
+
+Reduced cohomology gives us then a family of functors $\{ \tilde{H}^{n}(-) \}_{n \in \mathbb{N}}$ from pointed topological spaces to abelian groups.
+In \Cref{sec:cohomologies} we will discuss some of its properties, but before we want to discuss a particularly nice kind of topological spaces to which we want to restrict our attention.
+
+\section{CW complexes}
+
+\begin{defn}[CW complex]
   For $n \in \mathbb{N}$, an \emph{$n$-cell} is a topological space homeomorhpic to the closed unit ball $D^{n} \subseteq \mathbb{R}^{n}$.
-  A \emph{cell complex} is a topological space $X$ constructed inductively as follows:
+  A \emph{CW complex} is a topological space $X$ constructed inductively as follows:
   \begin{enumerate}
     \item The $0$-skeleton $X^{0}$ is a disjoint union of $0$-cells.
     \item The $m$-skeleton $X^{m}$ is obtained from $X^{m-1}$ by attaching a collection of $m$-cells to it along their boundaries.
@@ -165,29 +176,156 @@ We will discuss the properties of this functor in \Cref{sec:cohomologies}.
   \end{enumerate}
 \end{defn}
 
-Many familiar topological spaces can be described as cell complexes:
+Many familiar topological spaces can be described as CW complexes:
 
 \begin{exmp}
-  The $2$-sphere can be described as cell complex in many ways, for example:
+  The $2$-sphere can be described as CW complex in many ways, for example:
   \begin{itemize}
     \item One single $0$-cell and one single $2$-cell.
     \item One single $0$-cell, one single $1$-cell and two $2$-cells.
   \end{itemize}
 \end{exmp}
 
-\subsection{Cellular cohomology}
+\begin{rem}
+  Some reasons to restrict our attention to CW complexes:
 
-Singular cohomology is hard to compute directly by hand, but for a cell complex we can compute it as follows:
-
-\begin{defn}[Cellular cohomology]
-  ...
-\end{defn}
+  \begin{itemize}
+    \item A practical reason:~We may compute the cohomology of a CW complex via cellular cohomology \cite[p.~202]{hat02}, which is usually much easier to compute than singular cohomology but yields the same result.
+      For example, in order to compute cellular cohomology of a CW complex without cells on adjacent degrees---e.g., higher dimensional spheres or complex projective spaces---, we only need to count the number of cells on each degree.
+    \item A conceptual reason:~CW complexes form a \href{https://ncatlab.org/nlab/show/convenient+category+of+topological+spaces}{convenient category of topological spaces}.
+      Moreover, every topological space is weakly homotopic to a CW comlpex \cite[Proposition 4.13]{hat02}, and a map between simply connected CW complexes inducing isomorphisms on homology groups is automatically a homotopy equivalence \cite[Corollary 4.33]{hat02}.
+  \end{itemize}
+\end{rem}
 
 \section{Cohomology theories}\label{sec:cohomologies}
 
+We have seen how to attach some algebraic invariant---singular cohomology---to topological spaces, and we've agreed on restricting our attention to CW complexes.
+This invariant turns out to be very useful, so we would like to axiomatize its most useful features in order to find similar invariants.
+
+We start by analyzing what we currently have.
+We are considering pointed CW complexes and continuous pointed maps between them.
+This data forms a \emph{category}, which we will simply denote as $\mathbf{Top}$.
+This means that we can compose maps---\emph{morphisms}---in an associative manner and that each CW complex---each \emph{object} in the category---has an identity morphism to itself, satisfying the usual identity axioms.
+We denote by $\mathbf{Top}^{\mathrm{op}}$ the opposite category, which has the same objects and all arrows inverted, i.e., a morphism $Y \to X$ for every continuous map $X \to Y$.
+Another example of category is the category $\mathbf{Ab}$ of abelian groups and group homomorphisms.
+For each $n \in \mathbb{N}$ we have a \emph{functor}
+\[ \tilde{H}^{n} \colon \mathbf{Top}^{\mathrm{op}} \to \mathbf{Ab}, \]
+which associates to each object (resp.~morphism) in $\mathbf{Top}$ an object (resp.~morphism) in $\mathbf{Ab}$ preserving composition and identity morphisms.
+We can also regard this as a family of functors indexed by $n \in \mathbb{Z}$; the value on negative degrees is then always zero by definition.
+A key feature of cohomology, which allows us to relate the $\tilde{H}^{n}$ for different $n$, is the \emph{suspension isomorphism}:
+
+\begin{defn}[Suspension]
+  Let $(X,\{ x_{0} \})$ be a pointed topological space.
+  We define its \emph{(reduced) suspension} as the quotient
+  \[ \Sigma X := (X \times [0,1])/(X \times \{ 0 \} \cup X \times \{ 1 \} \cup \{ x_{0} \} \times I) \]
+  equipped with the base-point $[(x_{0},0)]$.
+\end{defn}
+
+For each $n \in \mathbb{Z}$ and each CW complex $X$ we get a \emph{natural} isomorphism $\tilde{H}^{n+1}(\Sigma X) \cong \tilde{H}^{n}(X)$, where naturality means that these isomorphisms are compatible with morphisms in $\mathbf{Top}$.
+This key feature will essentially allow us to restrict our attention to a functor $\tilde{H}^{n}$ for a single $n \in \mathbb{Z}$.
+
+The next fundamental feature of cohomology is its \emph{homotopy invariance}.
+Suppose $f, g \colon X \to Y$ are homotopic maps, i.e., there exists a continuous map $F \colon X \times [0,1] \to Y$ such that $F|_{X \times \{ 0 \}} = f$ and $F|_{X \times \{ 1 \}} = g$.
+Then $\tilde{H}^{n}(f) = \tilde{H}^{n}(g)$ for all $n \in \mathbb{Z}$, i.e., $f$ and $g$ induce the same homomorphisms in cohomology.
+Homotopy of continuous maps defines an equivalence relation compatible with comopsition, so we may consider the \emph{homotopy category} $\mathbf{hTop}$ whose objects are CW complexes and whose morphisms are homotopy classes of continuous maps between them.
+Homotopy invariance of $\tilde{H}^{n}$ translates then into saying that this functor induces a well-defined functor
+\[ \tilde{H}^{n} \colon \mathbf{hTop} \to \mathbf{Ab}. \]
+
+The category $\mathbf{hTop}$ has now some nice extra properties, e.g., we can form ``direct sums'' of two spaces $(X,\{x_{0}\})$ and $(Y,\{y_{0}\})$ by taking their \emph{wedge sum}
+\[ X \vee Y := X \cup_{x_{0} \sim y_{0}} Y. \]
+Singular cohomology is then compatible with wedge sums in the sense that the canonical morphisms
+\[ \tilde{H}^{n}( \vee_{i\in I} X_{i} ) \to \prod_{i \in I} \tilde{H}^{n}(X_{i}) \]
+are isomorphisms for all $n \in \mathbb{Z}$.
+Since finite direct products of abelian groups are the same as finite direct sums, we can think of these wedge sum isomorhpisms as ``additivity'' of the cohomology functors.
+Finally, we can consider some kind of ``short exact sequence'' in $\mathbf{hTop}$.
+Namely, if $A \subseteq X$ is the inclusion of a subcomplex, then we can consider the maps
+\[ A \hookrightarrow X \twoheadrightarrow X/A. \]
+The last key property that we need is that every such ``short exact sequence'' induces a short exact sequence
+\[ 0 \to \tilde{H}^{n}(X/A) \to \tilde{H}^{n}(X) \to \tilde{H}^{n}(A) \to 0 \]
+for all $n \in \mathbb{Z}$, i.e., the functors $\tilde{H}^{n}$ are ``exact''.
+
+We use these properties to axiomatize cohomology:
+
+\begin{defn}[Cohomology theorey]
+  A \emph{(reduced) cohomology theory} is a family of functors
+  \[ h^{n} \colon \mathbf{hTop} \to \mathbf{Ab} \]
+  for $n \in \mathbb{Z}$ satisfying the following axioms:
+  \begin{enumerate}[label=(\roman*)]
+    \item Suspension isomorhpism.
+    \item Additivity.
+    \item Exactness.
+  \end{enumerate}
+\end{defn}
+
+\begin{rem}
+  Other common sets of axioms include the long exact sequence assocaited to an inclusion $A \subseteq X$.
+  This long exact sequence can be deduced from exactness and the suspension isomorhpism, using that $X/A$ is homotopy equivalent to the result of attaching the cone over $A$ to $X$ \cite[Theorem VII.1.6]{bre93} and that we can obtain $\Sigma A$ by collapsing $X$ after attaching the cone over $A$ to $X$ \cite[Corollary VII.5.5]{bre93}.
+\end{rem}
+
+\begin{rem}
+  One of the fundamental results about cohomology theories is that if we further assume that $h^{n}(S^{0}) = 0$ for all $n \neq 0$, then this cohomology theory is isomorphic to singular cohomology \cite[Theorem 4.59]{hat02}.
+\end{rem}
+
 \section{Spectra}
 
+Given any CW complex $K$, we may consider the corresponding \emph{representable functor}
+\[ [-,K] \colon \mathbf{hTop}^{\mathrm{op}} \to \mathbf{Set} \]
+which sends a CW complex $X$ to the set of homotopy classes of maps from $X$ to $K$.
+More generally, a functor is called \emph{representable} if it is naturally isomorphic to one such functor.
+Representable functors have many nice properties:~They are compatible with direct sums and similar constructions (transform colimits in $\mathbf{hTop}$ into limits in $\mathbf{Set}$) and they determine the object $K$ itself (Yoneda lemma).
+Wouldn't it be nice if cohomology functors were representable?
+
+The additivity of cohomology functors insinuates that we may hope that they are representable.
+But why would the set $[X,K]$ carry any sort of natural abelian group structure to begin with?
+This is where \emph{spectra} come into play.
+
+The basic idea is the following.
+Attached to a CW complex $X$, we may consider its \emph{loopspace}
+\[ \Omega K := \{ \gamma \colon S^{1} \to K \mid \gamma \text{ continuous} \} \]
+equipped with the compact-open topology.
+We can comopse loops up to homotopy as one does when defining the fundamental group $\pi_{1}(K)$, so given $f,g \in [X, \Omega K]$ we may add them as
+\[ (f + g)(x) := f(x) \cdot g(x), \]
+where $\cdot$ denotes composition of loops.
+This makes $[X,\Omega K]$ into a group, but not necessarily an abelian group.
+However, this turns out to be the case if we iterate this construction one more time and we consider $[X, \Omega^{2} K]$ instead.
+This can be deduced from the \href{https://en.wikipedia.org/wiki/Eckmann\%E2\%80\%93Hilton_argument}{Eckmann--Hilton principle} as in the case of higher homotopy groups.
+
+Let's say then that we want our cohomology functors to be represented by loopspaces.
+It would then be nice if the suspension isomorphisms between the cohomology functors came from some relation among the different loopspaces representing the cohomology on each degree.
+To see what this relation should be, we use another nice property of the loopspace construction:~It is \emph{adjoint} to the suspension, i.e., there are natural isomorphisms
+\[ [\Sigma X, Y] \cong [X, \Omega Y]. \]
+In particular, if we consider the family of spaces $\{ K_{n} \}_{n \in \mathbb{N}}$ such that $K_{n} \cong \Omega K_{n+1}$ for all $n \in \mathbb{N}$, then we would have isomorphisms
+\[ [ X, K_{n}] \cong [ X, \Omega K_{n+1}] = [ \Sigma X,  K_{n+1}], \]
+resembling the suspension isomorhpism that we would have if $h^{n}(X)$ were isomorhpic to $[X,K_{n}]$ for all $n \in \mathbb{N}$.
+Moreover, now each set
+\[ [X, K_{n}] \cong [X, \Omega^{2} K_{n+2}] \]
+would carry a natural abelian group structure.
+
+Since each $K_{n}$ determines $K_{n-1}$, we can extend such a family of spaces to all negative integers.
+This leads to the following definition:
+
+\begin{defn}[Spectrum]
+  An \emph{$\Omega$-spectrum} is a family of CW complexes\footnote{A result of Milnor ensures that the loopspace of a CW comlpex is homotopy equivalent to a CW complex.} $\{K_{n}\}_{n \in \mathbb{N}}$ together with isomorphisms $K_{n} \cong \Omega K_{n+1}$ for all $n \in \mathbb{N}$.
+\end{defn}
+
+We then have the following:
+
+\begin{thm}[{\cite[Theorem 4.58]{hat02}}]
+  Let $\{K_{n}\}_{n \in \mathbb{N}}$ be an $\Omega$-spectrum.
+  Then the functors
+  \[ h^{n}(X) := [X,K_{n}] \]
+  for $n \in \mathbb{Z}$ define a cohomology theory.
+\end{thm}
+
 \section{Brown Representability theorem}
+
+Therefore, every $\Omega$-spectrum induces a cohomology theory.
+\emph{Brown representability} states that the converse is true as well:
+
+\begin{thm}[{\cite[Theorem 4E.1]{hat02}}]
+  Every (reduced) cohomology theory is induced by an $\Omega$-spectrum $\{ K_{n} \}_{n \in \mathbb{N}}$ via
+  \[ h^{n}(X) = [X, K_{n}]. \]
+\end{thm}
 
 \printbibliography
 \vfill
