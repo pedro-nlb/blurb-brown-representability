@@ -1,3 +1,3 @@
-# brown representability
+# Brown representability
 
-Document created from the blurb template [here](https://github.com/pedro-nlb/latex-templates).
+Notes for a Basic Notions talk (Freiburg, WS 22/23). 
